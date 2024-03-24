@@ -105,3 +105,10 @@ server = shinyServer(function(input, output, session) {
 
 shinyApp(ui, server)
 
+# co trzeba zrobic jeszcze + propozycje
+# lista nazwisk
+# w wykresie słupkowym mozliwosci wyboru co jest na osi
+# oś czasu z osobami
+# ladniejsza tabela w raw data 
+# po kliknieciu na nazwisko danej osoby w jakis sposob zaznaczenie jej na wykresach np. zmiana koloru 
+
