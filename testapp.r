@@ -2,6 +2,7 @@ library(shiny)
 library(semantic.dashboard)
 library(ggplot2)
 library(plotly)
+library(DT)
 
 world_coordinates = map_data("world")
 data = read.csv("dane_projekt2.csv")
@@ -15,7 +16,7 @@ ui = dashboardPage(
     sidebarMenu(
       menuItem(tabName = "main", "SEARCH BY DATE", icon = icon("calendar")),
       menuItem(tabName = "extra", "SEE RAW DATA", icon = icon("table")),
-      menuItem(tabName = "aboutus", "ABOUT US")
+      menuItem(tabName = "aboutus", "ABOUT US", icon = icon("info"))
     )
   ),
   dashboardBody(
@@ -26,6 +27,7 @@ ui = dashboardPage(
         fluidRow(
           box(
             width = 15,
+            height = 10,
             title = "Date Selection",
             color = "yellow",  
             ribbon = TRUE,
@@ -44,7 +46,7 @@ ui = dashboardPage(
             title_side = "top right",
             column(
               width = 15,
-              plotOutput("dotplot1")
+              plotlyOutput("plot1", width = "90%", height = "90%")
             )
           ),
           box(
@@ -61,7 +63,7 @@ ui = dashboardPage(
                 choices = c("Level 1", "Level 2", "Level 3"),
                 selected = "Level 1"
               ),
-              plotOutput("dotplot2")
+              plotOutput("plot2")
             )
           )
         )
@@ -85,18 +87,29 @@ server = shinyServer(function(input, output, session) {
     selected_month = as.integer(format(selected_date, format = "%m"))
     filtered_data = subset(data, month_2 == selected_month & day == selected_day)
     
-    output$dotplot1 = renderPlot({
-      ggplot() + 
-        geom_map(
-          data = world_coordinates, map = world_coordinates,
-          aes(long, lat, map_id = region),
-          color = "black", fill = "lightyellow"
-        ) +
-        geom_point(
-          data = filtered_data, aes(bplo1, bpla1),
-          color = "red"
-        ) 
-    })
+    mapa = plot_ly() %>%
+      add_trace(
+        data = filtered_data,
+        type = "scattergeo",
+        lon = filtered_data$bplo1,
+        lat = filtered_data$bpla1,
+        text = filtered_data$name,  
+        mode = "markers",
+        marker = list(size = 7, color = "red")  
+      ) %>%
+      layout(
+        geo = list(
+          scope = "world",  
+          showland = TRUE,
+          landcolor = "lightgray", 
+          showcountries = TRUE,  
+          countrycolor = "black"  
+        )
+      ) %>% 
+      config(scrollZoom = FALSE)
+    
+    
+    output$plot1 = renderPlotly({mapa})
   observeEvent(input$x,{
       inputx = input$x
     if (inputx == "Level 1") {
@@ -109,8 +122,8 @@ server = shinyServer(function(input, output, session) {
       inputx = "level3_main_occ"
     }
   
-    output$dotplot2 = renderPlot({
-    ggplot(filtered_data, aes_string(x = inputx)) +
+    output$plot2 = renderPlot({
+    ggplot(filtered_data, aes(x = .data[[inputx]])) +
       geom_bar() +
       labs(x = "Categories", y = "Number of people")
   })
