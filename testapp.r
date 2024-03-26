@@ -14,7 +14,8 @@ ui = dashboardPage(
     size = "thin", color = "teal",
     sidebarMenu(
       menuItem(tabName = "main", "SEARCH BY DATE", icon = icon("calendar")),
-      menuItem(tabName = "extra", "SEE RAW DATA", icon = icon("table"))
+      menuItem(tabName = "extra", "SEE RAW DATA", icon = icon("table")),
+      menuItem(tabName = "aboutus", "ABOUT US")
     )
   ),
   dashboardBody(
@@ -54,6 +55,12 @@ ui = dashboardPage(
             title_side = "top right",
             column(
               width = 15,
+              selectInput(
+                inputId = "x",
+                label = "Level",
+                choices = c("Level 1", "Level 2", "Level 3"),
+                selected = "Level 1"
+              ),
               plotOutput("dotplot2")
             )
           )
@@ -90,15 +97,24 @@ server = shinyServer(function(input, output, session) {
           color = "red"
         ) 
     })
+  observeEvent(input$x,{
+      inputx = input$x
+    if (inputx == "Level 1") {
+      inputx = "level1_main_occ"
+    }
+    if (inputx == "Level 2") {
+      inputx = "level2_main_occ"
+    }
+    if (inputx == "Level 3") {
+      inputx = "level3_main_occ"
+    }
   
-
-  
-  output$dotplot2 = renderPlot({
-    ggplot(filtered_data, aes(x = level1_main_occ)) +
+    output$dotplot2 = renderPlot({
+    ggplot(filtered_data, aes_string(x = inputx)) +
       geom_bar() +
-      labs(x = "Zawód", y = "Liczba osób", title = "Liczba osób w poszczególnych zawodach")
+      labs(x = "Categories", y = "Number of people")
   })
-  
+  })
   output$datatable = renderDataTable(filtered_data)
 })
 })
@@ -111,4 +127,3 @@ shinyApp(ui, server)
 # oś czasu z osobami
 # ladniejsza tabela w raw data 
 # po kliknieciu na nazwisko danej osoby w jakis sposob zaznaczenie jej na wykresach np. zmiana koloru 
-
