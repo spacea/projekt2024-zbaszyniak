@@ -26,7 +26,7 @@ ui = dashboardPage(
         tabName = "main",
         fluidRow(
           box(
-            width = 15,
+            width = 8,
             height = 10,
             title = "Date Selection",
             color = "yellow",  
@@ -36,6 +36,19 @@ ui = dashboardPage(
             column(
               width = 15,
               dateInput("selected_date", "Select a Date you want to check", startview = "decade")
+            )
+          ),
+          box(
+            width = 8,
+            height = 10,
+            title = "People born on your date",
+            color = "violet",  
+            ribbon = TRUE,
+            collapsible = FALSE,
+            title_side = "top right",
+            column(
+            # tu trzeba jakoś wypisać nazwiska
+              width = 6
             )
           ),
           box(
@@ -110,6 +123,9 @@ server = shinyServer(function(input, output, session) {
     
     
     output$plot1 = renderPlotly({mapa})
+    
+    # tu wypisać jakoś nazwiska
+    
   observeEvent(input$x,{
       inputx = input$x
     if (inputx == "Level 1") {
@@ -128,7 +144,9 @@ server = shinyServer(function(input, output, session) {
       labs(x = "Categories", y = "Number of people")
   })
   })
-  output$datatable = renderDataTable(filtered_data)
+  data_show = subset(filtered_data, select = c(-1, -5, -6, -12, -13, -17, -19, -20, -21, -23))
+  data_show = data_show[order(data_show$POPULARITY),]
+  output$datatable = renderDataTable(data_show)
 })
 })
 
