@@ -10,7 +10,7 @@ data$month_2 = as.integer(data$month_2)
 
 
 ui = dashboardPage(
-  dashboardHeader(color = "violet", title = "Is your birthday famous?", titleWidth = "wide", inverted = TRUE),
+  dashboardHeader(color = "violet", title = "Dayseek", titleWidth = "wide", inverted = TRUE),
   dashboardSidebar(
     size = "thin", color = "teal",
     sidebarMenu(
