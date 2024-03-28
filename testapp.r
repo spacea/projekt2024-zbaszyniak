@@ -10,7 +10,7 @@ data$month_2 = as.integer(data$month_2)
 
 
 ui = dashboardPage(
-  dashboardHeader(color = "violet", title = "Dayseek", titleWidth = "wide", inverted = TRUE),
+  dashboardHeader(color = "black", title = "Dayseek", inverted = TRUE),
   dashboardSidebar(
     size = "thin", color = "teal",
     sidebarMenu(
@@ -21,7 +21,6 @@ ui = dashboardPage(
   ),
   dashboardBody(
     tabItems(
-      selected = 1,
       tabItem(
         tabName = "main",
         fluidRow(
@@ -35,13 +34,13 @@ ui = dashboardPage(
             title_side = "top left",
             column(
               width = 15,
-              dateInput("selected_date", "Select a Date you want to check", startview = "decade")
+              dateInput("selected_date", "Select a date you want to check", startview = "decade")
             )
           ),
           box(
             width = 8,
             height = 10,
-            title = "People born on your date",
+            title = "People born on this date",
             color = "violet",  
             ribbon = TRUE,
             collapsible = FALSE,
@@ -54,6 +53,7 @@ ui = dashboardPage(
           box(
             width = 15,
             title = "Graph 1",
+            h1("Where were they born?"),
             color = "red",
             ribbon = TRUE,
             title_side = "top right",
@@ -64,6 +64,7 @@ ui = dashboardPage(
           ),
           box(
             width = 15,
+            h1("Check what they are related to"),
             title = "Graph 2",
             color = "green",
             ribbon = TRUE,
@@ -72,11 +73,14 @@ ui = dashboardPage(
               width = 15,
               selectInput(
                 inputId = "x",
-                label = "Level",
+                label = h3("Choose a level."),
                 choices = c("Level 1", "Level 2", "Level 3"),
                 selected = "Level 1"
               ),
-              plotOutput("plot2")
+              br(),
+              helpText("Here you can choose the level of categorization. Level 1 contains only four categories while level 3 contains 200 of them."),
+              br(),
+              plotlyOutput("plot2")
             )
           )
         )
@@ -106,10 +110,15 @@ server = shinyServer(function(input, output, session) {
         type = "scattergeo",
         lon = filtered_data$bplo1,
         lat = filtered_data$bpla1,
-        text = filtered_data$name,  
+        text = ~paste("Name:", name, "<br> Year of birth:", Year),  
         mode = "markers",
-        marker = list(size = 7, color = "red")  
-      ) %>%
+        marker = list(
+          size = 13, 
+          color = ~Year, 
+          colorscale = "Blues", 
+          colorbar = list(title = "Year")
+                      )
+              ) %>%
       layout(
         geo = list(
           scope = "world",  
@@ -118,8 +127,7 @@ server = shinyServer(function(input, output, session) {
           showcountries = TRUE,  
           countrycolor = "black"  
         )
-      ) %>% 
-      config(scrollZoom = FALSE)
+      )
     
     
     output$plot1 = renderPlotly({mapa})
@@ -138,12 +146,19 @@ server = shinyServer(function(input, output, session) {
       inputx = "level3_main_occ"
     }
   
-    output$plot2 = renderPlot({
-    ggplot(filtered_data, aes(x = .data[[inputx]])) +
-      geom_bar() +
-      labs(x = "Categories", y = "Number of people")
-  })
-  })
+      output$plot2 <- renderPlotly({
+        plot_ly() %>%
+          add_trace(data = filtered_data,
+                    x = ~.data[[inputx]],
+                    type = "histogram",
+                    color = ~.data[[inputx]],
+                    colors = "Blues"
+                    ) %>%
+          layout(xaxis = list(title = "Categories"), yaxis = list(title = "Number of people."))
+      })
+      
+
+})
   data_show = subset(filtered_data, select = c(-1, -5, -6, -12, -13, -17, -19, -20, -21, -23))
   data_show = data_show[order(data_show$POPULARITY),]
   output$datatable = renderDataTable(data_show)
@@ -154,7 +169,6 @@ shinyApp(ui, server)
 
 # co trzeba zrobic jeszcze + propozycje
 # lista nazwisk
-# w wykresie słupkowym mozliwosci wyboru co jest na osi
 # oś czasu z osobami
 # ladniejsza tabela w raw data 
 # po kliknieciu na nazwisko danej osoby w jakis sposob zaznaczenie jej na wykresach np. zmiana koloru 
