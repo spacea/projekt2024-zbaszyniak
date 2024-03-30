@@ -5,17 +5,17 @@ library(plotly)
 library(DT)
 
 world_coordinates = map_data("world")
-data = read.csv("dane_projekt2.csv")
+data = read.csv("dane_projekt3.csv")
 data$month_2 = as.integer(data$month_2)
-
+df = read.csv("databasemap.csv")
 
 ui = dashboardPage(
   dashboardHeader(color = "black", title = "Dayseek", inverted = TRUE),
   dashboardSidebar(
-    size = "thin", color = "teal",
+    size = "thin", color = "blue",
     sidebarMenu(
       menuItem(tabName = "main", "SEARCH BY DATE", icon = icon("calendar")),
-      menuItem(tabName = "extra", "SEE RAW DATA", icon = icon("table")),
+      menuItem(tabName = "extra", "QUICK LOOK INTO DATASET", icon = icon("table")),
       menuItem(tabName = "aboutus", "ABOUT US", icon = icon("info"))
     )
   ),
@@ -88,7 +88,30 @@ ui = dashboardPage(
       tabItem(
         tabName = "extra",
         fluidRow(
-          dataTableOutput("datatable")
+          box(
+            width = 15,
+            title = "Graph 1",
+            h1("Number of people in dataset for each country"),
+            color = "blue",
+            ribbon = TRUE,
+            title_side = "top right",
+            column(
+              width = 15,
+              plotlyOutput("plot3")
+            )
+          ),
+          box(
+            width = 15,
+            title = "Table 1",
+            h1("Take a look at datatable"),
+            color = "green",
+            ribbon = TRUE,
+            title_side = "top right",
+            column(
+              width = 15,
+              dataTableOutput("datatable")
+            )
+          ),
         )
       )
     )
@@ -146,7 +169,7 @@ server = shinyServer(function(input, output, session) {
       inputx = "level3_main_occ"
     }
   
-      output$plot2 <- renderPlotly({
+      output$plot2 = renderPlotly({
         plot_ly() %>%
           add_trace(data = filtered_data,
                     x = ~.data[[inputx]],
@@ -159,9 +182,23 @@ server = shinyServer(function(input, output, session) {
       
 
 })
-  data_show = subset(filtered_data, select = c(-1, -5, -6, -12, -13, -17, -19, -20, -21, -23))
+  colorscale1 = list(
+    c(0, 'rgb(221,242,253)'),
+    c(0.02, 'rgb(177,215,226)'),
+    c(0.08, 'rgb(155,190,200)'),
+    c(0.15, 'rgb(66,125,157)'),
+    c(1, 'rgb(22,72,99)')
+  )
+  
+  plot3 = plot_ly(df, type='choropleth', locations=df$CODE, z=df$n, text=df$n, colorscale = colorscale1)
+  output$plot3 = renderPlotly({plot3})
+  
+  data_show = subset(filtered_data, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -20, -21, -22, -24))
   data_show = data_show[order(data_show$POPULARITY),]
   output$datatable = renderDataTable(data_show)
+  
+  
+  
 })
 })
 

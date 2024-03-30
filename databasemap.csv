@@ -1,0 +1,223 @@
+"","CODE","COUNTRY","n"
+"1","ABW","Aruba",NA
+"2","AFG","Afghanistan",NA
+"3","AGO","Angola",NA
+"4","AIA","Anguilla",NA
+"5","ALB","Albania",2
+"6","AND","Andorra",NA
+"7","ARE","United Arab Emirates",1
+"8","ARG","Argentina",17
+"9","ARM","Armenia",NA
+"10","ASM","American Samoa",NA
+"11","ATG","Antigua and Barbuda",NA
+"12","AUS","Australia",89
+"13","AUT","Austria",8
+"14","AZE","Azerbaijan",NA
+"15","BDI","Burundi",NA
+"16","BEL","Belgium",10
+"17","BEN","Benin",NA
+"18","BFA","Burkina Faso",NA
+"19","BGD","Bangladesh",NA
+"20","BGR","Bulgaria",1
+"21","BHM","Bahamas, The",NA
+"22","BHR","Bahrain",1
+"23","BIH","Bosnia and Herzegovina",NA
+"24","BLR","Belarus",NA
+"25","BLZ","Belize",NA
+"26","BMU","Bermuda",NA
+"27","BOL","Bolivia",NA
+"28","BRA","Brazil",31
+"29","BRB","Barbados",1
+"30","BRN","Brunei",NA
+"31","BTN","Bhutan",NA
+"32","BWA","Botswana",NA
+"33","CAF","Central African Republic",NA
+"34","CAN","Canada",165
+"35","CHE","Switzerland",3
+"36","CHL","Chile",5
+"37","CHN","China",12
+"38","CIV","Cote d'Ivoire",NA
+"39","CMR","Cameroon",2
+"40","COD","Congo, Democratic Republic of the",NA
+"41","COG","Congo, Republic of the",NA
+"42","COK","Cook Islands",NA
+"43","COL","Colombia",14
+"44","COM","Comoros",NA
+"45","CPV","Cabo Verde",NA
+"46","CRI","Costa Rica",1
+"47","CUB","Cuba",7
+"48","CUW","Curacao",NA
+"49","CYM","Cayman Islands",NA
+"50","CYP","Cyprus",NA
+"51","CZE","Czech Republic",1
+"52","DEU","Germany",46
+"53","DJI","Djibouti",NA
+"54","DMA","Dominica",6
+"55","DNK","Denmark",10
+"56","DOM","Dominican Republic",NA
+"57","DZA","Algeria",2
+"58","ECU","Ecuador",NA
+"59","EGY","Egypt",4
+"60","ERI","Eritrea",1
+"61","ESP","Spain",43
+"62","EST","Estonia",NA
+"63","ETH","Ethiopia",NA
+"64","FIN","Finland",4
+"65","FJI","Fiji",NA
+"66","FLK","Falkland Islands (Islas Malvinas)",NA
+"67","FRA","France",53
+"68","FRO","Faroe Islands",NA
+"69","FSM","Micronesia, Federated States of",NA
+"70","GAB","Gabon",NA
+"71","GBR","United Kingdom",631
+"72","GEO","Georgia",NA
+"73","GGY","Guernsey",NA
+"74","GHA","Ghana",3
+"75","GIB","Gibraltar",NA
+"76","GIN","Guinea",NA
+"77","GMB","Gambia, The",NA
+"78","GNB","Guinea-Bissau",NA
+"79","GNQ","Equatorial Guinea",NA
+"80","GRC","Greece",5
+"81","GRD","Grenada",NA
+"82","GRL","Greenland",NA
+"83","GTM","Guatemala",NA
+"84","GUM","Guam",NA
+"85","GUY","Guyana",1
+"86","HKG","Hong Kong",NA
+"87","HND","Honduras",NA
+"88","HRV","Croatia",NA
+"89","HTI","Haiti",1
+"90","HUN","Hungary",2
+"91","IDN","Indonesia",5
+"92","IMN","Isle of Man",NA
+"93","IND","India",57
+"94","IRL","Ireland",34
+"95","IRN","Iran",3
+"96","IRQ","Iraq",NA
+"97","ISL","Iceland",3
+"98","ISR","Israel",6
+"99","ITA","Italy",35
+"100","JAM","Jamaica",11
+"101","JEY","Jersey",NA
+"102","JOR","Jordan",NA
+"103","JPN","Japan",25
+"104","KAZ","Kazakhstan",1
+"105","KEN","Kenya",3
+"106","KGZ","Kyrgyzstan",NA
+"107","KHM","Cambodia",1
+"108","KIR","Kiribati",NA
+"109","KNA","Saint Kitts and Nevis",NA
+"110","KOR","Korea, South",NA
+"111","KSV","Kosovo",1
+"112","KWT","Kuwait",NA
+"113","LAO","Laos",NA
+"114","LBN","Lebanon",4
+"115","LBR","Liberia",1
+"116","LBY","Libya",NA
+"117","LCA","Saint Lucia",NA
+"118","LIE","Liechtenstein",NA
+"119","LKA","Sri Lanka",1
+"120","LSO","Lesotho",NA
+"121","LTU","Lithuania",NA
+"122","LUX","Luxembourg",NA
+"123","LVA","Latvia",NA
+"124","MAC","Macau",NA
+"125","MAF","Saint Martin",NA
+"126","MAR","Morocco",4
+"127","MCO","Monaco",NA
+"128","MDA","Moldova",NA
+"129","MDG","Madagascar",NA
+"130","MDV","Maldives",NA
+"131","MEX","Mexico",54
+"132","MHL","Marshall Islands",NA
+"133","MKD","Macedonia",NA
+"134","MLI","Mali",NA
+"135","MLT","Malta",NA
+"136","MMR","Burma",NA
+"137","MNE","Montenegro",NA
+"138","MNG","Mongolia",1
+"139","MNP","Northern Mariana Islands",NA
+"140","MOZ","Mozambique",NA
+"141","MRT","Mauritania",NA
+"142","MUS","Mauritius",NA
+"143","MWI","Malawi",NA
+"144","MYS","Malaysia",1
+"145","NAM","Namibia",1
+"146","NCL","New Caledonia",NA
+"147","NER","Niger",NA
+"148","NGA","Nigeria",6
+"149","NIC","Nicaragua",NA
+"150","NIU","Niue",NA
+"151","NLD","Netherlands",26
+"152","NOR","Norway",8
+"153","NPL","Nepal",2
+"154","NZL","New Zealand",14
+"155","OMN","Oman",NA
+"156","PAK","Pakistan",8
+"157","PAN","Panama",NA
+"158","PER","Peru",1
+"159","PHL","Philippines",20
+"160","PLW","Palau",NA
+"161","PNG","Papua New Guinea",NA
+"162","POL","Poland",3
+"163","PRI","Puerto Rico",16
+"164","PRK","Korea, North",NA
+"165","PRT","Portugal",6
+"166","PRY","Paraguay",NA
+"167","PYF","French Polynesia",NA
+"168","QAT","Qatar",NA
+"169","ROU","Romania",3
+"170","RUS","Russia",17
+"171","RWA","Rwanda",NA
+"172","SAU","Saudi Arabia",NA
+"173","SDN","Sudan",NA
+"174","SEN","Senegal",1
+"175","SGP","Singapore",1
+"176","SLB","Solomon Islands",NA
+"177","SLE","Sierra Leone",NA
+"178","SLV","El Salvador",NA
+"179","SMR","San Marino",NA
+"180","SOM","Somalia",NA
+"181","SPM","Saint Pierre and Miquelon",NA
+"182","SRB","Serbia",2
+"183","SSD","South Sudan",1
+"184","STP","Sao Tome and Principe",NA
+"185","SUR","Suriname",NA
+"186","SVK","Slovakia",NA
+"187","SVN","Slovenia",1
+"188","SWE","Sweden",21
+"189","SWZ","Swaziland",NA
+"190","SXM","Sint Maarten",NA
+"191","SYC","Seychelles",NA
+"192","SYR","Syria",NA
+"193","TCD","Chad",NA
+"194","TGO","Togo",NA
+"195","THA","Thailand",NA
+"196","TJK","Tajikistan",NA
+"197","TKM","Turkmenistan",NA
+"198","TLS","Timor-Leste",NA
+"199","TON","Tonga",NA
+"200","TTO","Trinidad and Tobago",2
+"201","TUN","Tunisia",NA
+"202","TUR","Turkey",7
+"203","TUV","Tuvalu",NA
+"204","TWN","Taiwan",2
+"205","TZA","Tanzania",1
+"206","UGA","Uganda",1
+"207","UKR","Ukraine",2
+"208","URY","Uruguay",2
+"209","USA","United States",3091
+"210","UZB","Uzbekistan",NA
+"211","VCT","Saint Vincent and the Grenadines",NA
+"212","VEN","Venezuela",4
+"213","VGB","British Virgin Islands",NA
+"214","VGB","Virgin Islands",NA
+"215","VNM","Vietnam",1
+"216","VUT","Vanuatu",NA
+"217","WBG","West Bank",NA
+"218","WSM","Samoa",NA
+"219","YEM","Yemen",NA
+"220","ZAF","South Africa",12
+"221","ZMB","Zambia",NA
+"222","ZWE","Zimbabwe",NA
