@@ -6,6 +6,7 @@ library("data.table")
 library("dplyr")
 library("readxl")
 library("ggplot2")
+library("dplyr")
 
 # dane pobrane ze strony https://data.sciencespo.fr/dataset.xhtml?persistentId=doi:10.21410/7E4/RDAG3O
 # artykuł oraz metadane: https://www.nature.com/articles/s41597-022-01369-4#code-availability
@@ -58,3 +59,36 @@ przyklad = as.Date("2024-03-24", format = "%Y-%m-%d")
 dzien = as.numeric(format(przyklad, format = "%d"))
 miesiac = as.numeric(format(przyklad, format = "%m"))
 moja_data = subset(data_ordered, month_2 == miesiac & day == dzien)
+
+data_przyklad = read.csv("dane_projekt2.csv")
+
+unique(data_przyklad$all_geography_groups)
+data_przyklad$all_geography_groups = sapply(data_przyklad$all_geography_groups, function(x) strsplit(x, ",")[[1]][1])
+data_przyklad$all_geography_groups = lapply(data_przyklad$all_geography_groups, function(x) gsub("Old_regimes_in_/_of_", "", x))
+data_przyklad$all_geography_groups = lapply(data_przyklad$all_geography_groups, function(x) gsub("_", " ", x))
+data_przyklad$all_geography_groups = lapply(data_przyklad$all_geography_groups, function(x) gsub("United Kingdom of Great Britain and Northern Ireland", "United Kingdom", x))
+data_przyklad$all_geography_groups = lapply(data_przyklad$all_geography_groups, function(x) gsub("US", "United States", x))
+
+df = read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv")
+
+df2 = subset(data_przyklad, select = c(2,12))
+polaczone_bazy = merge(df, df2, by.x = "COUNTRY", by.y = "all_geography_groups")
+
+
+liczba_osob <- polaczone_bazy %>%
+  count(CODE)
+
+df = merge(df, liczba_osob, by.x = "CODE", by.y= "CODE", all.x = TRUE)
+df$log = log(df$n)*500
+
+colorscale1 = list(
+  c(0, 'rgb(221,242,253)'),
+  c(0.02, 'rgb(177,215,226)'),
+  c(0.08, 'rgb(155,190,200)'),
+  c(0.15, 'rgb(66,125,157)'),
+  c(1, 'rgb(22,72,99)')
+)
+
+fig <- plot_ly(df, type='choropleth', locations=df$CODE, z=df$n, text=df$n, colorscale = colorscale1)
+fig
+

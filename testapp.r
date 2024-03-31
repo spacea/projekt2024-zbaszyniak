@@ -6,10 +6,12 @@ library(DT)
 
 world_coordinates = map_data("world")
 data = read.csv("dane_projekt3.csv")
+data = data[order(data$POPULARITY),]
 data$month_2 = as.integer(data$month_2)
 df = read.csv("databasemap.csv")
 
 ui = dashboardPage(
+  
   dashboardHeader(color = "black", title = "Dayseek", inverted = TRUE),
   dashboardSidebar(
     size = "thin", color = "blue",
@@ -20,6 +22,13 @@ ui = dashboardPage(
     )
   ),
   dashboardBody(
+    tags$head(
+      tags$style(HTML("
+      #names_values {
+        font-family: Arial, sans-serif;
+      }
+    "))
+    ),
     tabItems(
       tabItem(
         tabName = "main",
@@ -35,7 +44,8 @@ ui = dashboardPage(
             column(
               width = 15,
               dateInput("selected_date", "Select a date you want to check", startview = "decade")
-            )
+            ),
+            style = "height: 300px;"
           ),
           box(
             width = 8,
@@ -46,9 +56,10 @@ ui = dashboardPage(
             collapsible = FALSE,
             title_side = "top right",
             column(
-            # tu trzeba jakoś wypisać nazwiska
+              verbatimTextOutput("names_values"),
               width = 6
-            )
+            ),
+            style = "height: 300px;"
           ),
           box(
             width = 15,
@@ -125,6 +136,7 @@ server = shinyServer(function(input, output, session) {
     selected_date = as.Date(input$selected_date, format = "%Y-%m-%d")
     selected_day = as.numeric(format(selected_date, format = "%d"))
     selected_month = as.integer(format(selected_date, format = "%m"))
+    selected_year = as.integer(format(selected_date, format = "%Y"))
     filtered_data = subset(data, month_2 == selected_month & day == selected_day)
     
     mapa = plot_ly() %>%
@@ -146,16 +158,22 @@ server = shinyServer(function(input, output, session) {
         geo = list(
           scope = "world",  
           showland = TRUE,
-          landcolor = "lightgray", 
+          landcolor = "black", 
           showcountries = TRUE,  
-          countrycolor = "black"  
+          countrycolor = "white"  
         )
       )
     
     
     output$plot1 = renderPlotly({mapa})
     
-    # tu wypisać jakoś nazwiska
+    filtered_data$roznica_lat = selected_year - filtered_data$Year
+    
+    before_after = ifelse(filtered_data$roznica_lat > 0, "years before", "years after")
+    
+    output$names_values = renderPrint({
+      cat(paste(filtered_data$name,"-", abs(filtered_data$roznica_lat), before_after, collapse = "\n"))
+    })
     
   observeEvent(input$x,{
       inputx = input$x
@@ -168,16 +186,10 @@ server = shinyServer(function(input, output, session) {
     if (inputx == "Level 3") {
       inputx = "level3_main_occ"
     }
-  
+      
       output$plot2 = renderPlotly({
-        plot_ly() %>%
-          add_trace(data = filtered_data,
-                    x = ~.data[[inputx]],
-                    type = "histogram",
-                    color = ~.data[[inputx]],
-                    colors = "Blues"
-                    ) %>%
-          layout(xaxis = list(title = "Categories"), yaxis = list(title = "Number of people."))
+        plot_ly(data = filtered_data, x = ~.data[[inputx]], type = "histogram", color = ~.data[[inputx]], colors = "Blues") %>%
+          layout(xaxis = list(title = "Categories"), yaxis = list(title = "Number of people.")) 
       })
       
 
@@ -193,7 +205,7 @@ server = shinyServer(function(input, output, session) {
   plot3 = plot_ly(df, type='choropleth', locations=df$CODE, z=df$n, text=df$n, colorscale = colorscale1)
   output$plot3 = renderPlotly({plot3})
   
-  data_show = subset(filtered_data, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -20, -21, -22, -24))
+  data_show = subset(filtered_data, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -20, -21, -22, -24, -25))
   data_show = data_show[order(data_show$POPULARITY),]
   output$datatable = renderDataTable(data_show)
   
