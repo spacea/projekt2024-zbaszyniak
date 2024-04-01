@@ -1,6 +1,5 @@
 library(shiny)
 library(semantic.dashboard)
-library(ggplot2)
 library(plotly)
 library(DT)
 
@@ -12,10 +11,14 @@ df = read.csv("databasemap.csv")
 
 ui = dashboardPage(
   
-  dashboardHeader(color = "black", title = "Dayseek", inverted = TRUE),
+  dashboardHeader(color = "blue", inverted = TRUE),
   dashboardSidebar(
     size = "thin", color = "blue",
     sidebarMenu(
+      div(
+        imageOutput("logo"),
+        style = "margin: 0; padding: 0;" 
+      ),
       menuItem(tabName = "main", "SEARCH BY DATE", icon = icon("calendar")),
       menuItem(tabName = "extra", "QUICK LOOK INTO DATASET", icon = icon("table")),
       menuItem(tabName = "aboutus", "ABOUT US", icon = icon("info"))
@@ -34,24 +37,22 @@ ui = dashboardPage(
         tabName = "main",
         fluidRow(
           box(
-            width = 8,
-            height = 10,
+            width = 7,
             title = "Date Selection",
-            color = "yellow",  
+            color = "blue",  
             ribbon = TRUE,
             collapsible = FALSE,
             title_side = "top left",
             column(
-              width = 15,
+              width = 8,
               dateInput("selected_date", "Select a date you want to check", startview = "decade")
             ),
-            style = "height: 300px;"
+            style = "height: 150px; padding-bottom: 20px; margin-bottom: 20px;"
           ),
           box(
             width = 8,
-            height = 10,
             title = "People born on this date",
-            color = "violet",  
+            color = "blue",  
             ribbon = TRUE,
             collapsible = FALSE,
             title_side = "top right",
@@ -59,13 +60,13 @@ ui = dashboardPage(
               verbatimTextOutput("names_values"),
               width = 6
             ),
-            style = "height: 300px;"
+            style = "max-height: 150px; overflow-y: auto; padding-bottom: 20px; margin-bottom: 20px;"
           ),
           box(
             width = 15,
             title = "Graph 1",
             h1("Where were they born?"),
-            color = "red",
+            color = "blue",
             ribbon = TRUE,
             title_side = "top right",
             column(
@@ -77,7 +78,7 @@ ui = dashboardPage(
             width = 15,
             h1("Check what they are related to"),
             title = "Graph 2",
-            color = "green",
+            color = "blue",
             ribbon = TRUE,
             title_side = "top right",
             column(
@@ -115,7 +116,7 @@ ui = dashboardPage(
             width = 15,
             title = "Table 1",
             h1("Take a look at datatable"),
-            color = "green",
+            color = "blue",
             ribbon = TRUE,
             title_side = "top right",
             column(
@@ -139,6 +140,15 @@ server = shinyServer(function(input, output, session) {
     selected_year = as.integer(format(selected_date, format = "%Y"))
     filtered_data = subset(data, month_2 == selected_month & day == selected_day)
     
+    output$logo = renderImage({
+      
+      list(src = "logo.jpg",
+           width = 140,
+           height = 140)
+      
+    }, deleteFile = F)
+      
+      
     mapa = plot_ly() %>%
       add_trace(
         data = filtered_data,
@@ -174,26 +184,26 @@ server = shinyServer(function(input, output, session) {
     output$names_values = renderPrint({
       cat(paste(filtered_data$name,"-", abs(filtered_data$roznica_lat), before_after, collapse = "\n"))
     })
-    
-  observeEvent(input$x,{
+
+    observeEvent(input$x,{
       inputx = input$x
-    if (inputx == "Level 1") {
-      inputx = "level1_main_occ"
-    }
-    if (inputx == "Level 2") {
-      inputx = "level2_main_occ"
-    }
-    if (inputx == "Level 3") {
-      inputx = "level3_main_occ"
-    }
       
-      output$plot2 = renderPlotly({
-        plot_ly(data = filtered_data, x = ~.data[[inputx]], type = "histogram", color = ~.data[[inputx]], colors = "Blues") %>%
+      if (inputx == "Level 1") {
+        inputx = "level1_main_occ"
+      } else if (inputx == "Level 2") {
+        inputx = "level2_main_occ"
+      } else if (inputx == "Level 3") {
+        inputx = "level3_main_occ"
+      }
+      
+      
+      output$plot2 <- renderPlotly({
+        plot_ly(data = filtered_data, x = ~.data[[inputx]], 
+                type = "histogram", color = ~.data[[inputx]], colors = "Blues") %>%
           layout(xaxis = list(title = "Categories"), yaxis = list(title = "Number of people.")) 
       })
-      
-
-})
+    })    
+  
   colorscale1 = list(
     c(0, 'rgb(221,242,253)'),
     c(0.02, 'rgb(177,215,226)'),
@@ -216,8 +226,3 @@ server = shinyServer(function(input, output, session) {
 
 shinyApp(ui, server)
 
-# co trzeba zrobic jeszcze + propozycje
-# lista nazwisk
-# oś czasu z osobami
-# ladniejsza tabela w raw data 
-# po kliknieciu na nazwisko danej osoby w jakis sposob zaznaczenie jej na wykresach np. zmiana koloru 
