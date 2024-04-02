@@ -1,18 +1,18 @@
 # Jak uruchomić nasz projekt?
 
-- Pobierz Projekt: Przejdź do repozytorium projektu na GitHubie i sklonuj repozytorium na swój komputer, używając opcji "Clone" lub pobierając je jako archiwum ZIP.
+- Pobierz projekt: Przejdź do repozytorium projektu na GitHubie i sklonuj repozytorium na swój komputer, używając opcji "Clone" lub pobierając je jako archiwum ZIP.
 
 - Instalacja: upewnij się, że masz zainstalowane wszystkie zależności i narzędzia wymagane do uruchomienia projektu takie jak R i R Studio
 
 - Otwórz R Studio: uruchom aplikację R Studio na swoim komputerze.
 
-- Utwórz Nowy Projekt: w menu R Studio wybierz opcję "File" (Plik), a następnie "New Project" (Nowy Projekt).
+- Utwórz nowy projekt: w menu R Studio wybierz opcję "File" (Plik), a następnie "New Project" (Nowy Projekt).
 
 - Wybierz Katalog: Wybierz opcję "Existing Directory" (Istniejący Katalog) i przejdź do katalogu, w którym znajduje się skopiowane repozytorium projektu.
 
-- Otwórz Projekt: kliknij przycisk "Create Project" (Utwórz Projekt), aby otworzyć projekt w R Studio.
+- Otwórz projekt: kliknij przycisk "Create Project" (Utwórz Projekt), aby otworzyć projekt w R Studio.
 
-- Przeglądaj Pliki Projektu: Po otwarciu projektu w R Studio, możesz przeglądać wszystkie pliki i foldery związane z naszym projektem. Otwórz plik app.R.
+- Przeglądaj pliki projektu: Po otwarciu projektu w R Studio, możesz przeglądać wszystkie pliki i foldery związane z naszym projektem. Otwórz plik app.R.
 
 - Uruchom skrypt: aplikację możesz uruchomić bezpośrednio w R Studio, klikając przycisk "Run" (Uruchom) lub używając skrótów klawiaturowych. Należy przejść przez wszystkie elementy kodu klikając Ctrl + Enter.
 
