@@ -26,4 +26,5 @@
 
 # Autorzy (a bardziej autorki)
 
-- Maria Zbąszyniak i Maria Kaźmierska 
+- Maria Zbąszyniak
+- Maria Kaźmierska 
