@@ -1,13 +1,16 @@
+# ładujemy odpowiednie pakiety
 library(shiny)
 library(semantic.dashboard)
 library(plotly)
 library(DT)
 
-world_coordinates = map_data("world")
+# wczytujemy dane 
 data = read.csv("dane_projekt3.csv")
 data = data[order(data$POPULARITY),]
 data$month_2 = as.integer(data$month_2)
 df = read.csv("databasemap.csv")
+
+# tworzymy UI czyli interfejs użytkownika
 
 ui = dashboardPage(
   
@@ -26,18 +29,20 @@ ui = dashboardPage(
   ),
   dashboardBody(
     tags$head(
+      # nadajemy styl do tekstu
       tags$style(HTML("
       #names_values {
         font-family: Arial, sans-serif;
       }
     "))
     ),
+    # tworzenie strony main
     tabItems(
       tabItem(
         tabName = "main",
         fluidRow(
           box(
-            width = 7,
+            width = 8,
             title = "Date Selection",
             color = "blue",  
             ribbon = TRUE,
@@ -45,6 +50,7 @@ ui = dashboardPage(
             title_side = "top left",
             column(
               width = 8,
+              #  wybór daty
               dateInput("selected_date", "Select a date you want to check", startview = "decade")
             ),
             style = "height: 150px; padding-bottom: 20px; margin-bottom: 20px;"
@@ -57,13 +63,14 @@ ui = dashboardPage(
             collapsible = FALSE,
             title_side = "top right",
             column(
+              # wypisywanie imion
               verbatimTextOutput("names_values"),
               width = 6
             ),
             style = "max-height: 150px; overflow-y: auto; padding-bottom: 20px; margin-bottom: 20px;"
           ),
           box(
-            width = 15,
+            width = 16,
             title = "Graph 1",
             h1("Where were they born?"),
             color = "blue",
@@ -71,11 +78,12 @@ ui = dashboardPage(
             title_side = "top right",
             column(
               width = 15,
+              # wykres
               plotlyOutput("plot1", width = "90%", height = "90%")
             )
           ),
           box(
-            width = 15,
+            width = 16,
             h1("Check what they are related to"),
             title = "Graph 2",
             color = "blue",
@@ -83,6 +91,7 @@ ui = dashboardPage(
             title_side = "top right",
             column(
               width = 15,
+              # wybór poziomu kategorii
               selectInput(
                 inputId = "x",
                 label = h3("Choose a level."),
@@ -90,18 +99,21 @@ ui = dashboardPage(
                 selected = "Level 1"
               ),
               br(),
+              # tekst pomocniczy
               helpText("Here you can choose the level of categorization. Level 1 contains only four categories while level 3 contains 200 of them."),
               br(),
+              # wykres
               plotlyOutput("plot2")
             )
           )
         )
       ),
       tabItem(
+        # tworzymy zakladke o danych
         tabName = "extra",
         fluidRow(
           box(
-            width = 15,
+            width = 16,
             title = "Graph 1",
             h1("Number of people in dataset for each country"),
             color = "blue",
@@ -109,18 +121,20 @@ ui = dashboardPage(
             title_side = "top right",
             column(
               width = 15,
+              # wykres
               plotlyOutput("plot3")
             )
           ),
           box(
-            width = 15,
+            width = 16,
             title = "Table 1",
             h1("Take a look at datatable"),
             color = "blue",
             ribbon = TRUE,
             title_side = "top right",
             column(
-              width = 15,
+              width = 16,
+              # tabela
               dataTableOutput("datatable")
             )
           ),
@@ -131,15 +145,21 @@ ui = dashboardPage(
   theme = "cerulean"
 )
 
+# tworzymy drugi element aplikacji - serwer
 server = shinyServer(function(input, output, session) {
   
+ 
   observeEvent(input$selected_date, {
+    # wybór daty - pozyskanie zmiennej
     selected_date = as.Date(input$selected_date, format = "%Y-%m-%d")
+    # zamiana formatu datowego na liczbe
     selected_day = as.numeric(format(selected_date, format = "%d"))
     selected_month = as.integer(format(selected_date, format = "%m"))
     selected_year = as.integer(format(selected_date, format = "%Y"))
+    # wyfiltrowanie tylko tych osób, które są urodzone w danym dniu
     filtered_data = subset(data, month_2 == selected_month & day == selected_day)
     
+    # dodanie logo do panelu bocznego
     output$logo = renderImage({
       
       list(src = "logo.jpg",
@@ -148,17 +168,17 @@ server = shinyServer(function(input, output, session) {
       
     }, deleteFile = F)
       
-      
+    # stworzenie mapy z miejscem urodzenia 
     mapa = plot_ly() %>%
       add_trace(
-        data = filtered_data,
+        data = filtered_data, # określamy źródło danych
         type = "scattergeo",
-        lon = filtered_data$bplo1,
+        lon = filtered_data$bplo1, #długość i szerokość geogr.
         lat = filtered_data$bpla1,
-        text = ~paste("Name:", name, "<br> Year of birth:", Year),  
+        text = ~paste("Name:", name, "<br> Year of birth:", Year),  # określenie co ma się wyświetlić po najechaniu myszką
         mode = "markers",
         marker = list(
-          size = 13, 
+          size = 11, 
           color = ~Year, 
           colorscale = "Blues", 
           colorbar = list(title = "Year")
@@ -177,17 +197,22 @@ server = shinyServer(function(input, output, session) {
     
     output$plot1 = renderPlotly({mapa})
     
+    # obliczamy roznice miedzy wybrana data a data urodzenia danej osoby
     filtered_data$roznica_lat = selected_year - filtered_data$Year
     
-    before_after = ifelse(filtered_data$roznica_lat > 0, "years before", "years after")
+    # generujemy odpowiedni tekst w zależności od tego, czy było to przed czy po tej dacie
+    before_after = ifelse(filtered_data$roznica_lat >= 0, "years before", "years after")
     
+    # wypisujemy tekst
     output$names_values = renderPrint({
       cat(paste(filtered_data$name,"-", abs(filtered_data$roznica_lat), before_after, collapse = "\n"))
     })
 
+  
     observeEvent(input$x,{
       inputx = input$x
       
+      # wybór poziomu kategorii
       if (inputx == "Level 1") {
         inputx = "level1_main_occ"
       } else if (inputx == "Level 2") {
@@ -196,14 +221,17 @@ server = shinyServer(function(input, output, session) {
         inputx = "level3_main_occ"
       }
       
-      
-      output$plot2 <- renderPlotly({
+     # wykres z kategoriami 
+      output$plot2 = renderPlotly({
         plot_ly(data = filtered_data, x = ~.data[[inputx]], 
                 type = "histogram", color = ~.data[[inputx]], colors = "Blues") %>%
           layout(xaxis = list(title = "Categories"), yaxis = list(title = "Number of people.")) 
       })
     })    
   
+    # tworzymy nową skalę barwną ponieważ automatyczna nie pokazywała prawidlowo danych
+    # ze względu na zbyt dużą wartość dla USA
+    
   colorscale1 = list(
     c(0, 'rgb(221,242,253)'),
     c(0.02, 'rgb(177,215,226)'),
@@ -212,11 +240,16 @@ server = shinyServer(function(input, output, session) {
     c(1, 'rgb(22,72,99)')
   )
   
+  # tworzymy mapę
   plot3 = plot_ly(df, type='choropleth', locations=df$CODE, z=df$n, text=df$n, colorscale = colorscale1)
   output$plot3 = renderPlotly({plot3})
   
-  data_show = subset(filtered_data, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -20, -21, -22, -24, -25))
-  data_show = data_show[order(data_show$POPULARITY),]
+  # filtrujemy dane ktore wyswietlimy w tabeli i sortujemy je wg popularnosci
+  data_show = filtered_data[order(filtered_data$POPULARITY),]
+  data_show = subset(data_show, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -19, -20, -21, -22, -24, -25))
+  # nadajemy nowe nazwy kolumn 
+  names(data_show) <- c("Name", "Sex", "Country", "Date of birth")
+  # wyswietlamy tabele
   output$datatable = renderDataTable(data_show)
   
   
