@@ -65,7 +65,7 @@ ui = dashboardPage(
             column(
               # wypisywanie imion
               verbatimTextOutput("names_values"),
-              width = 6
+              width = 8
             ),
             style = "max-height: 150px; overflow-y: auto; padding-bottom: 20px; margin-bottom: 20px;"
           ),
@@ -77,7 +77,7 @@ ui = dashboardPage(
             ribbon = TRUE,
             title_side = "top right",
             column(
-              width = 15,
+              width = 16,
               # wykres
               plotlyOutput("plot1", width = "90%", height = "90%")
             )
@@ -120,7 +120,7 @@ ui = dashboardPage(
             ribbon = TRUE,
             title_side = "top right",
             column(
-              width = 15,
+              width = 16,
               # wykres
               plotlyOutput("plot3")
             )
@@ -139,12 +139,23 @@ ui = dashboardPage(
             )
           ),
         )
+      ),
+      tabItem(
+        tabName = "aboutus",
+        fluidRow(
+          box(
+            width = 16,
+            h1("Welcome to DAYSEEK!"),
+            p("We're excited to have you on board and hope you enjoy our app."),
+            p("We are a team of enthusiasts who decided to combine our passion for technology with the world of show business. Our goal is to create an interactive platform that allows users to discover fascinating facts related to celebrity birth dates!"),
+            p("The creators of this project are Maria and Maria (you can call us M&M), students of geoinformatics at Adam Mickiewicz University in Poznań. In our free time, we love to delve into history and travel, which is connected with getting to know the culture of different regions of the world. Like every teenager, we observe what is happening in the lives of celebrities. We are not only passionate about science, but also actively participate in research, volunteering, and social projects."),
+            p("Why did we decide to focus on birth dates? We are fascinated by technology, but also by social media. So we came up with a brilliant idea. By entering your own birth date or any date into the search, users can discover who was born on the same day, where they come from, and what they do every day. It's a way to get to know yourself, but also your favorite celebrities.")
+          )
+        )
       )
     )
-  ),
-  theme = "cerulean"
+  )
 )
-
 # tworzymy drugi element aplikacji - serwer
 server = shinyServer(function(input, output, session) {
   
@@ -254,7 +265,7 @@ server = shinyServer(function(input, output, session) {
   
   
   
-})
+  })
 })
 
 shinyApp(ui, server)
