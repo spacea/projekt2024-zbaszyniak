@@ -17,13 +17,13 @@
 - Uruchom Skrypty lub Analizy: Jeśli projekt zawiera skrypty R lub analizy danych, możesz uruchamiać je bezpośrednio w R Studio, otwierając odpowiednie pliki i klikając przycisk "Run" (Uruchom) lub używając skrótów klawiaturowych. Należy przejść klikając ctrl + Enter przez każdą linijkę. 
 
 
-# Skąd wzięłyśmy dane 
+# Źródła danych
 
 - dane pobrane ze strony https://www.kaggle.com/datasets/arwind25/40-birthdays-of-famous-people-for-every-date?resource=download
 - dane pobrane ze strony https://data.sciencespo.fr/dataset.xhtml?persistentId=doi:10.21410/7E4/RDAG3O 
 - artykuł oraz metadane: https://www.nature.com/articles/s41597-022-01369-4#code-availability 
 
 
-# Autorzy( a bardziej autorki)
+# Autorzy (a bardziej autorki)
 
 - Maria Zbąszyniak i Maria Kaźmierska 
