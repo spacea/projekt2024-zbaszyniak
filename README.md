@@ -34,7 +34,11 @@ Do pierwszego uruchomienia aplikacji potrzebować będzie potrzebne zainstalowan
   install.package ("DT")
 ```
 
-
+# Zawartość repozytorium
+- databaseprep.R - plik dokumnetujący w jaki sposób przygotowałyśmy dane
+- app.R - właściwy plik aplikacji
+- dane_projekt3.csv i databasemap.csv - bazy danych używane w aplikacji
+- .gitignore, .rProj to rozszerzenia plików używanych do konfiguracji projektu i kontroli wersji
 # Źródła danych
 
 - dane pobrane ze strony https://www.kaggle.com/datasets/arwind25/40-birthdays-of-famous-people-for-every-date?resource=download
