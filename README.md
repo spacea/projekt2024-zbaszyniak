@@ -1,20 +1,29 @@
-# Jak otworzyć nasz projekt 
+# Jak uruchomić nasz projekt?
 
 - Pobierz Projekt: Przejdź do repozytorium projektu na GitHubie i sklonuj repozytorium na swój komputer, używając opcji "Clone" lub pobierając je jako archiwum ZIP.
 
-- Instalacja: Upewnij się, że masz zainstalowane wszystkie zależności i narzędzia wymagane do uruchomienia projektu. Takie jak R i R studio
+- Instalacja: upewnij się, że masz zainstalowane wszystkie zależności i narzędzia wymagane do uruchomienia projektu takie jak R i R Studio
 
-- Otwórz R Studio: Uruchom aplikację R Studio na swoim komputerze.
+- Otwórz R Studio: uruchom aplikację R Studio na swoim komputerze.
 
-- Utwórz Nowy Projekt: W menu R Studio wybierz opcję "File" (Plik), a następnie "New Project" (Nowy Projekt).
+- Utwórz Nowy Projekt: w menu R Studio wybierz opcję "File" (Plik), a następnie "New Project" (Nowy Projekt).
 
 - Wybierz Katalog: Wybierz opcję "Existing Directory" (Istniejący Katalog) i przejdź do katalogu, w którym znajduje się skopiowane repozytorium projektu.
 
-- Otwórz Projekt: Kliknij przycisk "Create Project" (Utwórz Projekt), aby otworzyć projekt w R Studio.
+- Otwórz Projekt: kliknij przycisk "Create Project" (Utwórz Projekt), aby otworzyć projekt w R Studio.
 
-- Przeglądaj Pliki Projektu: Po otwarciu projektu w R Studio, możesz przeglądać wszystkie pliki i foldery związane z naszym projektem. Upewnij się, że znasz strukturę projektu i gdzie znajdują się pliki, którymi chcesz pracować.
+- Przeglądaj Pliki Projektu: Po otwarciu projektu w R Studio, możesz przeglądać wszystkie pliki i foldery związane z naszym projektem. Otwórz plik app.R.
 
-- Uruchom Skrypty lub Analizy: Jeśli projekt zawiera skrypty R lub analizy danych, możesz uruchamiać je bezpośrednio w R Studio, otwierając odpowiednie pliki i klikając przycisk "Run" (Uruchom) lub używając skrótów klawiaturowych. Należy przejść klikając ctrl + Enter przez każdą linijkę. 
+- Uruchom skrypt: aplikację możesz uruchomić bezpośrednio w R Studio, klikając przycisk "Run" (Uruchom) lub używając skrótów klawiaturowych. Należy przejść przez wszystkie elementy kodu klikając Ctrl + Enter.
+
+# Niezbędne pakiety
+Do pierwszego uruchomienia aplikacji potrzebować będzie potrzebne zainstalowanie odpowiednich pakietów, bez których aplikacja nie będzie działać. Instalacja potrzebna jest tylko przed pierwszym uruchomieniem, jeśli wcześniej nie instalowaliśmy takich pakietów. Można je zainstalować z użyciem poniższego kodu. Aby wykonać kod, wklej go w dowolnym skrypcie R i wykonaj każdą linijkę z użyciem Ctrl + Enter. 
+```R
+  install.package ("shiny")
+  install.package ("semantic.dashboard")
+  install.package ("plotly")
+  install.package ("DT")
+```
 
 
 # Źródła danych
