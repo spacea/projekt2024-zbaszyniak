@@ -79,16 +79,6 @@ liczba_osob <- polaczone_bazy %>%
   count(CODE)
 
 df = merge(df, liczba_osob, by.x = "CODE", by.y= "CODE", all.x = TRUE)
-df$log = log(df$n)*500
 
-colorscale1 = list(
-  c(0, 'rgb(221,242,253)'),
-  c(0.02, 'rgb(177,215,226)'),
-  c(0.08, 'rgb(155,190,200)'),
-  c(0.15, 'rgb(66,125,157)'),
-  c(1, 'rgb(22,72,99)')
-)
 
-fig <- plot_ly(df, type='choropleth', locations=df$CODE, z=df$n, text=df$n, colorscale = colorscale1)
-fig
 
