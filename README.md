@@ -1,5 +1,11 @@
 # Jak uruchomić nasz projekt?
-
+## Bez pobierania repozytorium 
+Wklej kod w dowolnym skrypcie R w odpowiednim IDE np. R Studio i uruchom go poprzez przejście przez każdą linijkę skrótem Ctrl + Enter. 
+```
+library(shiny)
+runGitHub("projekt2024-zbaszyniak", "spacea")
+```
+## Pobieranie repozytorium
 - Pobierz projekt: Przejdź do repozytorium projektu na GitHubie i sklonuj repozytorium na swój komputer, używając opcji "Clone" lub pobierając je jako archiwum ZIP.
 
 - Instalacja: upewnij się, że masz zainstalowane wszystkie zależności i narzędzia wymagane do uruchomienia projektu takie jak R i R Studio
