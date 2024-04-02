@@ -1,3 +1,6 @@
+# DATESEEK
+Aplikacja, którą stworzyłyśmy służy do sprawdzenia, kto ze znanych ludzi urodził się w dany, wybrany przez użytkownika dzień. Dzięki niej możesz sprawdzić kto jest twoim "sławnym bliźniakiem", a także trochę się o nim dowiedzieć. Aby wyświetlić listę osób, wybierz datę z panelu po lewej stronie a następnie zapoznaj się z informacjami na stronie.  <br> <br> 
+Warto także zajrzeć do zakładki "QUICK LOOK INTO DATASET" gdzie możesz dowiedzieć się więcej o danych, które wykorzystałyśmy przy tworzeniu aplikacji. 
 # Jak uruchomić nasz projekt?
 ## Bez pobierania repozytorium 
 Wklej kod w dowolnym skrypcie R w odpowiednim IDE np. R Studio i uruchom go poprzez przejście przez każdą linijkę skrótem Ctrl + Enter. 
