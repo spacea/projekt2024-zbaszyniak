@@ -5,10 +5,12 @@ library(plotly)
 library(DT)
 
 # wczytujemy dane 
-data = read.csv("dane_projekt3.csv")
+data = read.csv("dane_projekt3.csv", stringsAsFactors = FALSE)
 data = data[order(data$POPULARITY),]
 data$month_2 = as.integer(data$month_2)
 df = read.csv("databasemap.csv")
+data$link = paste("https://en.wikipedia.org/wiki/", gsub(" ", "_", data$name))
+data$link2 = paste0("<a href='", data$link, "' target='_blank'>", data$name, "</a>")
 
 # tworzymy UI czyli interfejs użytkownika
 
@@ -128,7 +130,7 @@ ui = dashboardPage(
           box(
             width = 16,
             title = "Table 1",
-            h1("Take a look at datatable"),
+            h1("Take a look at the data"),
             color = "blue",
             ribbon = TRUE,
             title_side = "top right",
@@ -218,8 +220,8 @@ server = shinyServer(function(input, output, session) {
     output$names_values = renderPrint({
       cat(paste(filtered_data$name,"-", abs(filtered_data$roznica_lat), before_after, collapse = "\n"))
     })
+    
 
-  
     observeEvent(input$x,{
       inputx = input$x
       
@@ -257,11 +259,11 @@ server = shinyServer(function(input, output, session) {
   
   # filtrujemy dane ktore wyswietlimy w tabeli i sortujemy je wg popularnosci
   data_show = filtered_data[order(filtered_data$POPULARITY),]
-  data_show = subset(data_show, select = c(-1, -2, -5, -6, -7, -8, -9, -10, -11, -12, -14, -15, -16, -17, -18, -19, -20, -21, -22, -24, -25))
-  # nadajemy nowe nazwy kolumn 
-  names(data_show) <- c("Name", "Sex", "Country", "Date of birth")
+  data_show = data_show[, c(26, 4, 9, 13, 23)]
+  # nadajemy nowe nazwy kolumn
+  colnames(data_show) = c("Name (click to go to Wikipedia)", "Gender", "Profession", "Country", "Date of birth")
   # wyswietlamy tabele
-  output$datatable = renderDataTable(data_show)
+  output$datatable = renderDataTable(data_show, rownames = FALSE, escape = FALSE)
   
   
   
@@ -269,4 +271,3 @@ server = shinyServer(function(input, output, session) {
 })
 
 shinyApp(ui, server)
-
