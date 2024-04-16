@@ -16,7 +16,7 @@ Do pierwszego uruchomienia aplikacji potrzebować będzie potrzebne zainstalowan
 Wklej kod w dowolnym skrypcie R w odpowiednim IDE np. R Studio i uruchom go poprzez przejście przez każdą linijkę skrótem Ctrl + Enter. 
 ```
 library(shiny)
-runGitHub("projekt2024-zbaszyniak", "spacea")
+runGitHub("projekt2024-zbaszyniak", "spacea", launch.browser = TRUE)
 ```
 
 ## Pobieranie repozytorium
