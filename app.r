@@ -5,10 +5,10 @@ library(plotly)
 library(DT)
 
 # wczytujemy dane 
-data = read.csv("dane_projekt3.csv", stringsAsFactors = FALSE)
+data = read.csv("data/dane_projekt3.csv", stringsAsFactors = FALSE)
 data = data[order(data$POPULARITY),]
 data$month_2 = as.integer(data$month_2)
-df = read.csv("databasemap.csv")
+df = read.csv("data/databasemap.csv")
 data$link = paste("https://en.wikipedia.org/wiki/", gsub(" ", "_", data$name))
 data$link2 = paste0("<a href='", data$link, "' target='_blank'>", data$name, "</a>")
 
@@ -175,7 +175,7 @@ server = shinyServer(function(input, output, session) {
     # dodanie logo do panelu bocznego
     output$logo = renderImage({
       
-      list(src = "logo.jpg",
+      list(src = "data/logo.jpg",
            width = 140,
            height = 140)
       
@@ -271,3 +271,4 @@ server = shinyServer(function(input, output, session) {
 })
 
 shinyApp(ui, server)
+
