@@ -34,7 +34,7 @@ runGitHub("projekt2024-zbaszyniak", "spacea", launch.browser = TRUE)
 - app.R - właściwy plik aplikacji
 - dane_projekt3.csv i databasemap.csv - bazy danych używane w aplikacji
 - .gitignore, .rProj to rozszerzenia plików używanych do konfiguracji projektu i kontroli wersji
-- 
+
 # Źródła danych
 - dane pobrane ze strony https://www.kaggle.com/datasets/arwind25/40-birthdays-of-famous-people-for-every-date?resource=download
 - dane pobrane ze strony https://data.sciencespo.fr/dataset.xhtml?persistentId=doi:10.21410/7E4/RDAG3O 
